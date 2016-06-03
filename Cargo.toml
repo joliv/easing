@@ -1,0 +1,6 @@
+[package]
+name = "easing"
+version = "0.0.2"
+authors = ["Jack Ward <joliv@users.noreply.github.com>"]
+
+[dependencies]
