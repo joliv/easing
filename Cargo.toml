@@ -2,11 +2,9 @@
 name = "easing"
 version = "0.0.2"
 authors = ["Jack Ward <joliv@users.noreply.github.com>"]
-
-[package]
 include = [
-    "src/*"
-	"Cargo.toml"
+    "src/*",
+	"Cargo.toml",
 ]
 license = "LGPL-3.0"
 
