@@ -8,5 +8,6 @@ include = [
     "src/*"
 	"Cargo.toml"
 ]
+license = "LGPL-3.0"
 
 [dependencies]
