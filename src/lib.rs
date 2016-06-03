@@ -1,3 +1,9 @@
+// Copyright 2016 Jack Ward under LGPLv3
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTIBILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// Lesser General Public License `LICENSE` for details.
+
 use std::f64::consts::{FRAC_PI_2};
 
 macro_rules! easer {
@@ -21,7 +27,7 @@ macro_rules! easer {
                 if self.step > self.steps {
                     None
                 } else {
-                    let x: f64 = self.step as f64 / self.steps as f64;
+                    let x = self.step as f64 / self.steps as f64;
                     Some($e(x) * self.dist + self.start)
                 }
             }
@@ -33,7 +39,7 @@ easer!(linear, Linear, |x:f64| {
     x
 });
 easer!(quad_in, QuadIn, |x:f64| {
-    x*x
+    x * x
 });
 easer!(quad_out, QuadOut, |x:f64| {
     -(x * (x - 2.))
