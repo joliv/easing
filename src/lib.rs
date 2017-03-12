@@ -83,6 +83,10 @@ easer!(sin_in, SinIn, |x:f64| {
 easer!(sin_out, SinOut, |x:f64| {
     (x * FRAC_PI_2).sin()
 });
+easer!(sin_inout, SinInOut, |x:f64| {
+    if x < 0.5 { 0.5 * (1. - (1. - 4. * (x * x)).sqrt()) }
+    else       { 0.5 * ((-((2. * x) - 3.) * ((2. * x) - 1.)).sqrt() + 1.) }
+});
 
 #[cfg(test)]
 mod test {
@@ -291,6 +295,24 @@ mod test {
             10000.
         ];
         let try: Vec<f64> = sin_out(0f64, 10000f64, 10).map(round_5).collect();
+        assert_eq!(try, model);
+    }
+
+    #[test]
+    fn sin_inout_test() {
+        let model = vec![
+            101.020514,
+            417.424305,
+            1000.,
+            2000.,
+            5000.,
+            8000.,
+            9000.,
+            9582.575695,
+            9898.979486,
+            10000.
+        ];
+        let try: Vec<f64> = sin_inout(0f64, 10000f64, 10).map(round_5).collect();
         assert_eq!(try, model);
     }
 }
