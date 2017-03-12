@@ -87,6 +87,20 @@ easer!(sin_inout, SinInOut, |x:f64| {
     if x < 0.5 { 0.5 * (1. - (1. - 4. * (x * x)).sqrt()) }
     else       { 0.5 * ((-((2. * x) - 3.) * ((2. * x) - 1.)).sqrt() + 1.) }
 });
+easer!(exp_in, ExpIn, |x:f64| {
+    if x == 0. { 0. }
+    else       { (10. * (x - 1.)).exp2() }
+});
+easer!(exp_out, ExpOut, |x:f64| {
+    if x == 1. { 1. }
+    else       { 1. - (-10. * x).exp2() }
+});
+easer!(exp_inout, ExpInOut, |x:f64| {
+    if      x == 1. { 1. }
+    else if x == 0. { 0. }
+    else if x < 0.5 { 0.5 * ((20. * x) - 10.).exp2() }
+    else            { -0.5 * ((-20. * x) + 10.).exp2() + 1. }
+});
 
 #[cfg(test)]
 mod test {
@@ -313,6 +327,60 @@ mod test {
             10000.
         ];
         let try: Vec<f64> = sin_inout(0f64, 10000f64, 10).map(round_5).collect();
+        assert_eq!(try, model);
+    }
+
+    #[test]
+    fn exp_in_test() {
+        let model = vec![
+            19.53125,
+            39.0625,
+            78.125,
+            156.25,
+            312.5,
+            625.,
+            1250.,
+            2500.,
+            5000.,
+            10000.
+        ];
+        let try: Vec<f64> = exp_in(0f64, 10000f64, 10).map(round_5).collect();
+        assert_eq!(try, model);
+    }
+
+    #[test]
+    fn exp_out_test() {
+        let model = vec![
+            5000.,
+            7500.,
+            8750.,
+            9375.,
+            9687.5,
+            9843.75,
+            9921.875,
+            9960.9375,
+            9980.46875,
+            10000.
+        ];
+        let try: Vec<f64> = exp_out(0f64, 10000f64, 10).map(round_5).collect();
+        assert_eq!(try, model);
+    }
+
+    #[test]
+    fn exp_inout_test() {
+        let model = vec![
+            19.53125,
+            78.125,
+            312.5,
+            1250.,
+            5000.,
+            8750.,
+            9687.5,
+            9921.875,
+            9980.46875,
+            10000.
+        ];
+        let try: Vec<f64> = exp_inout(0f64, 10000f64, 10).map(round_5).collect();
         assert_eq!(try, model);
     }
 }
