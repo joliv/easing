@@ -28,7 +28,7 @@ macro_rules! easer {
                     None
                 } else {
                     let x = self.step as f64 / self.steps as f64;
-                    Some($e(x) * self.dist + self.start)
+                    Some($e(x).mul_add(self.dist, self.start))
                 }
             }
         }
@@ -46,7 +46,7 @@ easer!(quad_out, QuadOut, |x:f64| {
 });
 easer!(quad_inout, QuadInOut, |x:f64| {
     if x < 0.5 { 2. * x * x }
-    else { (-2. * x * x) + (4. * x) - 1. }
+    else { (-2. * x * x) + x.mul_add(4., -1.) }
 });
 easer!(cubic_in, CubicIn, |x:f64| {
     x * x * x
@@ -58,8 +58,8 @@ easer!(cubic_out, CubicOut, |x:f64| {
 easer!(cubic_inout, CubicInOut, |x:f64| {
     if x < 0.5 { 4. * x * x * x }
     else {
-        let y = (2. * x) - 2.;
-        0.5 * y * y * y + 1.
+        let y = x.mul_add(2., -2.);
+        (y * y * y).mul_add(0.5, 1.)
     }
 });
 easer!(quartic_in, QuarticIn, |x:f64| {
@@ -67,13 +67,13 @@ easer!(quartic_in, QuarticIn, |x:f64| {
 });
 easer!(quartic_out, QuarticOut, |x:f64| {
     let y = x - 1.;
-    y * y * y * (1. - x) + 1.
+    (y * y * y).mul_add(1. - x, 1.)
 });
 easer!(quartic_inout, QuarticInOut, |x:f64| {
     if x < 0.5 { 8. * x * x * x * x }
     else {
         let y = x - 1.;
-        -8. * y * y * y * y + 1.
+        (y * y * y * y).mul_add(-8., 1.)
     }
 });
 easer!(sin_in, SinIn, |x:f64| {
@@ -84,8 +84,8 @@ easer!(sin_out, SinOut, |x:f64| {
     (x * FRAC_PI_2).sin()
 });
 easer!(sin_inout, SinInOut, |x:f64| {
-    if x < 0.5 { 0.5 * (1. - (1. - 4. * (x * x)).sqrt()) }
-    else       { 0.5 * ((-((2. * x) - 3.) * ((2. * x) - 1.)).sqrt() + 1.) }
+    if x < 0.5 { 0.5 * (1. - (x * x).mul_add(-4., 1.).sqrt()) }
+    else       { 0.5 * ((x.mul_add(-2., 3.) * x.mul_add(2., -1.)).sqrt() + 1.) }
 });
 easer!(exp_in, ExpIn, |x:f64| {
     if x == 0. { 0. }
@@ -98,8 +98,8 @@ easer!(exp_out, ExpOut, |x:f64| {
 easer!(exp_inout, ExpInOut, |x:f64| {
     if      x == 1. { 1. }
     else if x == 0. { 0. }
-    else if x < 0.5 { 0.5 * ((20. * x) - 10.).exp2() }
-    else            { -0.5 * ((-20. * x) + 10.).exp2() + 1. }
+    else if x < 0.5 { x.mul_add(20., -10.).exp2() * 0.5 }
+    else            { x.mul_add(-20., 10.).exp2().mul_add(-0.5, 1.) }
 });
 
 #[cfg(test)]
