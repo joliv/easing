@@ -16,7 +16,12 @@ macro_rules! easer {
         }
 
         pub fn $f(start: f64, end: f64, steps: u64) -> $t {
-            $t {start: start, dist: end-start, step: 0, steps: steps}
+            $t {
+                start: start,
+                dist: end - start,
+                step: 0,
+                steps: steps,
+            }
         }
 
         impl Iterator for $t {
