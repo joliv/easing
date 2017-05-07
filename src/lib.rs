@@ -1,8 +1,4 @@
-// Copyright 2016 Jack Ward under LGPLv3
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTIBILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// Lesser General Public License `LICENSE` for details.
+// Copyright 2016 John Ward under MIT
 
 use std::f64::consts::{FRAC_PI_2};
 

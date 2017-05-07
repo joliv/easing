@@ -1,12 +1,12 @@
 [package]
 name = "easing"
-version = "0.0.4"
+version = "0.0.5"
 authors = ["Jack Ward <joliv@users.noreply.github.com>"]
 include = [
     "src/*",
     "Cargo.toml",
 ]
-license = "LGPL-3.0"
+license = "MIT"
 description = "Leveraging Rust's powerful iterators for easing."
 repository = "https://github.com/joliv/easing"
 readme = "README.md"
